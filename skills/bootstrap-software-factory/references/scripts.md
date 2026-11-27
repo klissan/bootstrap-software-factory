@@ -63,6 +63,7 @@ Adapt per project; create only what the workflows use.
 | cleanup | Removes merged or cancelled worktrees and branches, never the main checkout |
 | report | Assembles the task or readiness report from state and evidence |
 | context-budget | Measures always-loaded instruction files against the budget; see `validation.md` |
+| guards | One script per accepted invariant plus a runner over all of them; contract in `guards.md` |
 | decoupling-check | Fails if run-time files reference the bootstrap skill; see `validation.md` |
 
 ## Tests

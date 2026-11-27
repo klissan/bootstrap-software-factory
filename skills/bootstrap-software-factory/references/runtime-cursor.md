@@ -34,8 +34,8 @@ Sources: cursor.com/docs/cli/headless, /cli/using,
   `<project>/.cursor/cli.json`; `permissions.allow` and `permissions.deny`
   with tokens `Shell(...)`, `Read(...)`, `Write(...)`, `WebFetch(...)`,
   `Mcp(server:tool)`. Deny wins.
-- Hooks and subagents exist; their locations and schemas were not
-  confirmed in this pass: unknown, read the docs for the installed version.
+- Hooks: see the Hooks section. Subagents: location and schema not
+  confirmed; read the docs for the installed version.
 
 ## MCP
 
@@ -97,3 +97,33 @@ AGENTS.md pointing at the shared workflows, plus skills.
   to read it, never interpolate external text into the argument.
 - Exit-code behavior on refusal or failure: unknown; test it.
 - Cloud agents do not read `~/.cursor/mcp.json`.
+
+## Hooks
+
+Documented (cursor.com/docs/agent/hooks, read 2026-11-27); unverified.
+See `guards.md` before registering a guard.
+- Configuration: `.cursor/hooks.json` (project; commands run from the
+  project root) and `~/.cursor/hooks.json` (user); enterprise and team
+  hooks take priority and may not be visible in the repository.
+- Shape: `{"version": 1, "hooks": {"<event>": [{"command": ..., "matcher":
+  <regex>, "timeout": <seconds>, "failClosed": <bool>}]}}`.
+- Events used by guards: `preToolUse`, `beforeShellExecution` (can block),
+  `postToolUse`, `stop`.
+- `afterFileEdit` is observational: it cannot send a message to the agent.
+  For feedback after an edit use `postToolUse` with `additional_context`
+  on standard output, or `stop` with `followup_message`, which submits a
+  new message (`loop_limit`, default 5).
+- Blocking: exit 2, or JSON `permission: "deny"` with `agent_message`.
+  Other non-zero codes fail open unless `failClosed` is true: set it
+  only on guards whose failure policy is fail closed (by default the
+  secret guards, see `guards.md`); leave it false elsewhere and surface
+  the failure loudly.
+- Input: JSON on standard input with `hook_event_name`, `workspace_roots`,
+  and event fields such as `tool_name`, `tool_input`.
+- Blocks before the action: documented yes, for `preToolUse`,
+  `beforeShellExecution`, `beforeMCPExecution`, and `beforeReadFile`, with
+  `agent_message` fed back on denial. Not verified on a machine.
+- Organization level: enterprise (device-managed) and team (dashboard)
+  hooks are documented and take priority over project and user hooks;
+  whether a user can disable or override them is unconfirmed: verify.
+- Unconfirmed: whether these hooks also run in the headless `agent` CLI.

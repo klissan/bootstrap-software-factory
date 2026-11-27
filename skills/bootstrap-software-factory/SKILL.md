@@ -5,7 +5,7 @@ description: Bootstrap, audit, or upgrade a project-specific software factory ac
 
 # Bootstrap Software Factory
 
-Skill revision: 5 (2026-11-27). Record it in generated provenance.
+Skill revision: 6 (2026-11-27). Record it in generated provenance.
 
 Build a project-specific factory that a coding-agent session can operate.
 Use the current session as coordinator unless the project needs an external
@@ -33,6 +33,7 @@ condition holds, and only the profiles for the chosen options.
 | `onboarding.md` | After the interview, before setup instructions and the doctor |
 | `recommended-tooling.md` | With onboarding: proposing optional MCP servers, plugins, skills |
 | `scripts.md` | Designing steps (§5) and writing scripts (§9); shell pitfalls |
+| `guards.md` | Proposing or writing invariant checks and runtime hooks |
 | `delivery-workflow.md` | Generating the development workflow (§7) |
 | `incident-workflow.md` | Generating the incident workflow (§8) |
 | `validation.md` | Validating (§9); context budget; decoupling check |
@@ -60,6 +61,8 @@ condition holds, and only the profiles for the chosen options.
 - Tokens are not free. A repeated step that needs no judgement is a tested
   script, never something a model performs by hand.
 - Always-loaded instructions stay short; procedures load on demand.
+- An invariant that can be checked mechanically gets a guard script, not
+  a sentence in a prompt.
 - Label prompt-based guidance separately from mechanically enforced controls.
 - Never claim a factory is operational solely because files were generated.
 
@@ -219,6 +222,7 @@ Create a minimal design covering:
 - Roles with bounded inputs, outputs, and permissions.
 - Persistent task state and evidence storage.
 - Acceptance gates and their enforcement mechanisms.
+- Guards: accepted invariants, the layers each runs in, strength label.
 - External-write policy, resource limits, and recovery.
 - Context budget for always-loaded files.
 - Implementation plan and validation plan.
@@ -326,6 +330,10 @@ recorded success), idempotent on external systems, with fixture tests for
 block, pass, fail, limit, invalid-input, and invalidate paths against an
 isolated temporary remote plus clone.
 Do not present prompts or local hooks as tamper-proof enforcement.
+Guards follow `guards.md`: one script per invariant, run in the
+verification stage; runtime hooks only call them and need user consent.
+A blocking pre-action hook is a hard block only for the tool calls it
+covers; server-side checks are the only layer binding everyone.
 Do not run unreviewed discovered hooks merely to inventory them.
 
 For each gate, document:

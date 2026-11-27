@@ -84,6 +84,11 @@ documentation against the code before the first round.
 
 ## Evidence and integration
 
+The verification stage runs every accepted guard against the candidate
+(base to head) and records the result as evidence; a guard failure fails
+the stage. Hooks give earlier feedback but never replace this run.
+
+
 Bind evidence to the exact candidate:
 repository revisions, test-suite revision, command, environment,
 timestamp, exit status, and artifact location.
@@ -107,6 +112,17 @@ Before publishing, reconcile existing branches and PRs by task identity.
 Use a stable external-operation key and inspect uncertain prior outcomes.
 Store delivery links and partial successes.
 Link relevant decision entries from the change-request body.
+
+## After a failure
+
+When a mistake reached review or the user (a forbidden edit, a broken
+invariant, a regression): state the invariant in one sentence, propose a
+guard for it (`guards.md`), and on the user's consent write it, add the
+failing diff as a fixture test plus a compliant one, run the tests, log
+the decision, and link the failure evidence. Keep it scoped to the
+repository where it happened; do not promote one incident's workaround
+into a global rule without the user's consent. If no mechanical check is
+possible, record that and add the case to the review checklist instead.
 
 ## State and resume
 

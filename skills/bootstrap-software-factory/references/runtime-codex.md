@@ -18,8 +18,8 @@ mode pages), read 2026-11-27.
   profiles are selected with `--profile`.
 - MCP servers are configured in the same TOML configuration; the table
   name and schema: unknown, read the MCP page for the installed version.
-- Skills, custom prompts, and hooks: locations unknown; discover them.
-  Do not assume Claude Code subagent or hook files work here.
+- Skills and custom prompts: locations unknown; discover them. Do not
+  assume Claude Code subagent or hook files work here unchanged.
 
 ## Headless CLI
 
@@ -62,4 +62,36 @@ directory. Entry point: AGENTS.md pointing at shared workflows and scripts.
 ## Limits and unknowns
 
 - Skill and subagent support differs from Claude Code and by version.
-- Whether hooks exist and their schema: unknown.
+- Hook support on Windows: not stated; verify.
+
+## Hooks
+
+Documented (official Codex hooks page, read 2026-11-27); verify on the
+installed version before registering a guard (see `guards.md`).
+- Configuration: `.codex/hooks.json` (project; loaded only from trusted
+  project layers), `$CODEX_HOME/hooks.json` (user), a system location, or
+  inline `[hooks]` in `config.toml`. On by default.
+- Non-managed hooks must be reviewed and trusted by the user before they
+  run, and again after any change (`/hooks` in the CLI): a newly written
+  guard is inactive until then.
+- Shape: event → matcher group → handlers (`type: "command"`, `command`,
+  `timeout`); a `commandWindows` override is documented.
+- Events used by guards: `PreToolUse`, `PostToolUse`, `Stop`. File edits
+  arrive as `apply_patch` (matchable as `apply_patch`, `Edit`, or `Write`);
+  shell commands as `Bash`.
+- Input: JSON on standard input with `cwd`, `hook_event_name`, `tool_name`,
+  `tool_input`.
+- Exit 2 is the blocking code with the reason on standard error. A blocked
+  `PostToolUse` replaces the tool result with the feedback (the edit is not
+  undone); a blocked `Stop` becomes a continuation prompt. On exit 0,
+  `Stop` output must be JSON. JSON alternative: `decision: "block"`, `reason`.
+- Blocks before the action: documented yes. `PreToolUse` exiting 2, or
+  `hookSpecificOutput.permissionDecision: "deny"`, blocks with the reason
+  fed back. Not verified on a machine.
+- Organization level: a system-wide hooks file and "managed" hooks exempt
+  from the trust review are documented; whether a user or project can
+  disable them (`[features] hooks = false` turns hooks off) is
+  unconfirmed: verify at bootstrap.
+- Matching hooks for one event run concurrently: guards must not depend
+  on each other's order. Default timeout 600 seconds: set a short one.
+- Unconfirmed: behavior of other exit codes; support on Windows.

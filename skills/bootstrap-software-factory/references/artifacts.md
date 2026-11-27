@@ -16,6 +16,7 @@ repos/<repo-id>.md
 workflows/deliver.md, workflows/investigate.md
 roles/<needed-role>.md
 scripts/<mechanical steps and controls>, with their fixture tests
+guards/<one script per invariant>, guards/tests/, guards/hooks/<runtime adapter>
 <runtime-specific skills and agent configuration>
 
 Create only applicable files.
@@ -25,6 +26,10 @@ Do not assume that a Markdown link automatically activates a skill.
 Always-loaded files (AGENTS.md, CLAUDE.md, always-applied rules, skill and
 agent descriptions) hold identity, hard rules, and pointers only, within
 the stated budget (`validation.md`). Procedures go in on-demand files.
+
+Per-runtime hook configuration lives where that runtime reads it (see the
+runtime profile) and only calls the adapter in `guards/hooks/`. Put it in
+the factory repository, or in a target repository only when authorized.
 
 Generate project skills for delivery, investigation, and resume when useful.
 Each skill must define its trigger, required inputs, procedure, outputs,

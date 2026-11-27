@@ -76,3 +76,32 @@ short CLAUDE.md and project skills (for example deliver, resume).
 
 - Flags and minimum versions change often; the headless page states
   version requirements per flag. Check the installed version first.
+
+## Hooks
+
+Documented (code.claude.com/docs/en/hooks, read 2026-11-27); verify on the
+installed version before registering a guard (see `guards.md`).
+- Configuration: `hooks` in `.claude/settings.json` (project, shared),
+  `.claude/settings.local.json` (project, ignored), `~/.claude/settings.json`
+  (user); also managed policy, plugins, and skill or subagent frontmatter.
+- Shape: event → matcher group (`matcher` on the tool name) → handlers
+  (`type: "command"`, `command`). `${CLAUDE_PROJECT_DIR}` is the project root.
+- Events used by guards: `PreToolUse`, `PostToolUse`, `Stop`.
+- Input: JSON on standard input with `cwd`, `hook_event_name`, `tool_name`,
+  `tool_input` (file tools carry `tool_input.file_path`).
+- Exit 2 is the blocking code and feeds standard error to the model:
+  `PreToolUse` blocks the call; `PostToolUse` reports after the tool
+  already ran; `Stop` prevents stopping. Any other non-zero code is a
+  non-blocking error. JSON alternative: `decision: "block"` with `reason`.
+- Blocks before the action: yes. A `PreToolUse` hook exiting 2 (or JSON
+  `hookSpecificOutput.permissionDecision: "deny"`) stops the call before
+  it runs and is evaluated before permission rules, so an allow rule does
+  not bypass it.
+- Organization level: hooks in managed policy settings cannot be disabled
+  from user, project, or local settings (`disableAllHooks` respects the
+  hierarchy; `allowManagedHooksOnly` restricts hooks to managed ones).
+  Project, user, and local hooks are ordinary editable files: protect them
+  with permission deny rules (syntax: permissions page).
+  Sources: /hooks, /hooks-guide, /permissions, /settings-reference.
+- Default command timeout is 600 seconds: set a short one.
+- Unconfirmed: the loop-protection field for `Stop` hooks.

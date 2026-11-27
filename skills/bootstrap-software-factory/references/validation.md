@@ -74,6 +74,28 @@ The factory must run without this skill installed.
   the skill directory excluded, then confirm the first-run prompt works in
   a fresh session that does not invoke the skill.
 
+## Guards
+
+- Every guard has fixture tests: a violating diff, a compliant diff, and
+  its known false-positive cases; all pass.
+- The verification stage runs all accepted guards and a violation fails it.
+- Guards protect guards: changing a guard script, its tests, the hook
+  configuration, or the gate trips the protection guard.
+- Hook configuration parses and is valid for the installed runtime
+  version; a deliberate violation in a fixture session is fed back to the
+  agent. Where that was not exercised, the hook layer is unverified.
+- Each guard is labelled with the layers it runs in (`guards.md`): a
+  pre-action block counts only where a fixture session showed the call
+  blocked, including the same change attempted through the shell tool;
+  server-side only where it is a required check the agent cannot change.
+- The publish-gate hook, where registered, blocks a publish command with a
+  failing gate and allows it with a passing one; hook configuration and
+  guard paths are protected from edits.
+- No hook was registered without a decision entry; no target repository
+  was modified without authorization.
+- False-positive review: run the guards over recent history of the
+  default branch and report how many past commits would have been blocked.
+
 ## Optional tools
 
 - Every installed optional tool (MCP server, plugin, skill, CLI) proposed

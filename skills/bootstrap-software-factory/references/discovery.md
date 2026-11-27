@@ -137,3 +137,31 @@ If credentials or network access are missing, prepare a usable configuration
 with unresolved references and exact setup steps. Continue independent work.
 Never call the connection verified.
 
+## Candidate invariants (guards)
+
+While reading each repository, collect invariants a script could check
+(`guards.md`). Propose each with one evidence line (file and what it
+shows); the user accepts or declines each. Look for:
+
+- Generated or vendored files and "do not edit" headers.
+- Lockfiles and files that change only through a tool.
+- Frozen identifiers, formats, or files named in the repository's own
+  instructions. A rule already written in AGENTS.md, CLAUDE.md, or a
+  contributing guide ("never change X") is the strongest candidate: turn
+  it into a mechanical check.
+- Paired artifacts that must change together: data model and migration
+  (detect the migration tool actually in use from build files and
+  directories; never assume one), API schema and generated client, public
+  interface and its documentation or changelog.
+- Wire contracts shared between repositories: a change on one side
+  without the paired change or a shared decision entry.
+- Secrets and local configuration that must never be committed.
+- "Tests change with code" or similar rules the project already states.
+- Formatting or build outputs committed by mistake.
+
+Evidence comes from the repository (history of past fixes and reverts,
+review comments, CI steps, instructions), not from general habit. Do not
+invent an invariant the project does not have. Propose the few with the
+highest value and the lowest false-positive risk first; say what each
+check would miss. Record accepted and declined candidates in the
+decision log.

@@ -53,7 +53,8 @@ Log: interview answers; resolutions of conflicts with existing configuration;
 tool, invocation, or format choices forced by a verified limitation; security
 and safety exceptions (a file excluded from a commit, a skipped check, an
 overridden gate); scope changes; cross-repository contract changes;
-enforcement-level and readiness-level changes; deferrals.
+enforcement-level and readiness-level changes; deferrals; guards added,
+declined, overridden, or retired, and every hook registration.
 Do not log implementation detail recoverable from the diff.
 
 - No secrets, personal data, or raw ticket or log text; summarize and link.

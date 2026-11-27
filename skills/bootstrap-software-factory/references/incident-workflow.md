@@ -60,7 +60,9 @@ For code repairs, enter the development workflow with a reproducer.
 For postmortems, record impact, timeline, evidence, causes/uncertainties,
 actions, owners where known, and regression coverage.
 
-Propose improvements to factory procedures after incidents.
+Propose improvements to factory procedures after incidents; where the
+cause was a broken invariant a script could have caught, propose a guard
+(`guards.md`, and "After a failure" in `delivery-workflow.md`).
 Do not automatically promote one incident's workaround into a global rule.
 
 Mechanical steps (bounded queries, redaction, evidence capture, deployed
