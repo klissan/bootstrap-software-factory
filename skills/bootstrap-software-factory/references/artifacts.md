@@ -48,8 +48,11 @@ schema version, generating skill revision, factory identity, runtimes
 (primary and `reviewer.runtime`, `model`, `effort`, verified command),
 repositories, connections, commands, workflows, permissions, limits,
 context budget, decision-log locations, evidence storage, and readiness;
-`review.publication` (`comments`, `summary`, `local`), where the summary
-goes, and `review.report_path`; `transitions` (enabled, and per tracker
+`review.publication` (`inline`, `comments`, `summary`, `local`),
+`review.summary`, thread severities and cap, whether the factory may
+resolve threads, and `review.report_path`; `epics` (strategy, plan
+approval, maximum children, start condition for dependents, item types
+and required labels or components per tracker); `transitions` (enabled, and per tracker
 project: event, target state, actor, allowlist); `naming` (branch pattern,
 placeholders, maximum length, allowed characters, per-repository
 overrides, commit-message and change-request title patterns).

@@ -5,7 +5,7 @@ description: Bootstrap, audit, or upgrade a project-specific software factory ac
 
 # Bootstrap Software Factory
 
-Skill revision: 7 (2026-11-27). Record it in generated provenance.
+Skill revision: 8 (2026-11-27). Record it in generated provenance.
 
 Build a project-specific factory that a coding-agent session can operate.
 Use the current session as coordinator unless the project needs an external
@@ -35,6 +35,8 @@ condition holds, and only the profiles for the chosen options.
 | `scripts.md` | Designing steps (§5) and writing scripts (§9); shell pitfalls |
 | `guards.md` | Proposing or writing invariant checks and runtime hooks |
 | `delivery-workflow.md` | Generating the development workflow (§7) |
+| `review-threads.md` | Review publication mode `inline` is considered or chosen |
+| `epic-workflow.md` | Input is an epic, or a task spans several repositories |
 | `incident-workflow.md` | Generating the incident workflow (§8) |
 | `validation.md` | Validating (§9); context budget; decoupling check |
 
@@ -287,7 +289,7 @@ Rules the generated workflow must keep:
 - Review is independent, read-only, in a fresh context, through the
   verified reviewer invocation. Unavailable or unparseable review means
   blocked, never silent self-review. Publication follows the user's
-  `review.publication` mode (comments, summary, local); a durable record
+  `review.publication` mode (inline threads, comments, summary, local); a durable record
   always exists. Define what "approved" means on this host.
 - Names come from the `branch-name` script and the configured patterns;
   never push to a default or protected branch. Tickets move only if the
@@ -302,6 +304,8 @@ Rules the generated workflow must keep:
 - State lives outside the conversation, with one writer. Resume reads state
   and linked decision entries, then inspects real repository and external
   state before continuing.
+- An epic or multi-repository task is decomposed into children by an
+  approved plan before any item is created (`epic-workflow.md`).
 - Log clarifications, plan choices, contract changes, and blocked and
   resolved decisions; link entries from task state and the change request.
 

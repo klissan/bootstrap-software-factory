@@ -76,3 +76,27 @@ is "verify at bootstrap".
 - Finer states: Status (Premium and Ultimate), or labels and board lists.
   Discover which the project uses. API calls for state, status, and
   labels: verify at bootstrap against the deployed version.
+
+## Review threads
+
+- Supported: diff threads with notes, resolve and unresolve.
+  https://docs.gitlab.com/api/discussions/
+- Create: `POST /projects/:id/merge_requests/:merge_request_iid/discussions`
+  with `body` and `position[base_sha]`, `position[start_sha]`,
+  `position[head_sha]`, `position[position_type]` (`text`),
+  `position[new_path]`, `position[old_path]`, and `position[new_line]`
+  or `position[old_line]` (both for unchanged lines).
+- Reply: `POST .../discussions/:discussion_id/notes`. Resolve or reopen:
+  `PUT .../discussions/:discussion_id` with `resolved`. List:
+  `GET .../discussions`.
+- Take the three revisions from the merge request's current diff version;
+  how that is read on the deployed version: verify at bootstrap.
+
+## Parent and child items
+
+- Epics (Premium and Ultimate) can have child epics and issues; details
+  of adding children and cross-project scope are on the child-items page,
+  not confirmed here: verify at bootstrap, including the tier.
+  https://docs.gitlab.com/user/group/epics/manage_epics/
+- Without epics: linked issues or task items; calls and availability on
+  the deployed version: verify at bootstrap.

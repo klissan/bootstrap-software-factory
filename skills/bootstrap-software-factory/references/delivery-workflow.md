@@ -87,6 +87,9 @@ bound to the commit, and the full transcript of every round stays in the
 factory's local state. A review is never a black box: there is always a
 durable record in a place the user chose, and the task report says where.
 
+- `inline`: one resolvable thread per finding, anchored to file and line
+  of the reviewed revision in the host's native review channel; may be
+  combined with a summary. Full rules: `review-threads.md`.
 - `comments`: open the change request as a draft after the first passing
   verification; publish every round (verdict, findings, revision, reviewer
   model) as one comment each; mark it ready only after the gate passes on
@@ -106,12 +109,15 @@ secret-like content, and idempotent (a hidden marker per revision and
 round, or per summary). A new commit after publication invalidates the
 review; the summary or verdict is then replaced, not duplicated.
 
+A task that is an epic or spans several repositories follows
+`epic-workflow.md`; each child then runs this workflow.
+
 No change request (completion point is local changes, or the host has
 none): write the review report to the configured location in the factory
 state (`review.report_path`, one file per task and revision), reference
 it from task state and the final report to the user, and where authorized
 and wanted add a one-line reference in the tracker item. Modes
-`comments` and `summary` fall back to this file and say so.
+`inline`, `comments`, and `summary` fall back to this file and say so.
 
 ## Evidence and integration
 

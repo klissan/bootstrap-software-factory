@@ -55,7 +55,7 @@ and safety exceptions (a file excluded from a commit, a skipped check, an
 overridden gate); scope changes; cross-repository contract changes;
 enforcement-level and readiness-level changes; deferrals; guards added,
 declined, overridden, or retired, and every hook registration; the review
-publication mode, ticket-transition policy and allowlist, and naming rules.
+publication mode, multi-repository strategy and each approved epic plan, ticket-transition policy and allowlist, and naming rules.
 Do not log implementation detail recoverable from the diff.
 
 - No secrets, personal data, or raw ticket or log text; summarize and link.

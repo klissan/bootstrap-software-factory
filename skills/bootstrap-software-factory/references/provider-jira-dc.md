@@ -74,3 +74,15 @@ is "verify at bootstrap".
   permissions of the account in use: discover per issue.
 - Integrated code hosts and workflow triggers may move tickets on their
   own: ask, and do not duplicate.
+
+## Review threads
+
+- None: Jira has no diff. Reviews live on the code host.
+
+## Parent and child items
+
+- Depends on version and project configuration: sub-tasks under a
+  parent, epics linked through an instance-specific custom field or a
+  parent field, and issue links with instance-specific link types.
+  Nothing here was confirmed from the Data Center reference: discover
+  the fields from the project's create metadata and verify at bootstrap.

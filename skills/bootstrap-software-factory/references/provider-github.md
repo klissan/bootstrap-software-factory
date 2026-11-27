@@ -86,3 +86,32 @@ is "verify at bootstrap".
   verify at bootstrap (fine-grained tokens cannot reach user-owned
   Projects).
 - Closing on merge is the host's job; the factory only writes the keyword.
+
+## Review threads
+
+- Supported: line-anchored review comments with replies; threads can be
+  resolved in the interface.
+- Create: `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` with
+  `body`, `commit_id`, `path`, `line`, `side` (`start_line` for ranges;
+  `subject_type: file` for a file-level comment). A comment on an older
+  `commit_id` may become outdated. Reply:
+  `POST .../pulls/{pull_number}/comments/{comment_id}/replies` (top-level
+  comments only). https://docs.github.com/en/rest/pulls/comments
+- Resolve and reopen are not in that REST reference. The GraphQL API has
+  them: mutations `resolveReviewThread` (input `threadId`, the id of a
+  `PullRequestReviewThread`) and `unresolveReviewThread`; the thread's
+  `isResolved` field reads the state (GraphQL reference, pulls, read
+  2026-11-27). Docs: a conversation may be resolved by the pull request's
+  author or by anyone with write access. Thread ids come from GraphQL,
+  not from the REST comment ids; the token permission needed is
+  unconfirmed: verify at bootstrap. Without it, reply with the verdict
+  and let a human resolve.
+
+## Parent and child items
+
+- Sub-issues: up to 100 per parent, eight levels, and an existing issue
+  from another repository can be added. CLI: `gh issue create --parent`,
+  `gh issue edit --add-sub-issue` (check the installed `gh` version).
+  https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues
+- API calls for sub-issues, and creating a child directly in another
+  repository: verify at bootstrap. Fallback: cross-references in bodies.

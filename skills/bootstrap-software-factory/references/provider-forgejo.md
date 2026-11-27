@@ -74,3 +74,22 @@ is "verify at bootstrap".
 - Finer states are labels by the team's convention. Whether closing
   requires the default branch, and the API calls for state and labels:
   verify at bootstrap from the instance's OpenAPI document.
+
+## Review threads
+
+- Supported in the interface: comments on changed lines (including
+  ranges) and reviews that approve or request changes.
+  https://forgejo.org/docs/latest/user/pull-requests-and-git-flow/
+- Replies, resolving conversations, how a position is expressed, and all
+  API calls: not stated in the pages read. Verify at bootstrap from the
+  instance's OpenAPI document; if line comments cannot be created through
+  the API, use the flat `file:line` fallback.
+
+## Parent and child items
+
+- No parent, child, or epic concept is documented. Issues can depend on
+  other issues or pull requests, which blocks closing; milestones group
+  issues. https://forgejo.org/docs/latest/user/issue-tracking-basics/
+- Default: a parent issue whose body lists the children, plus
+  dependencies where enabled. Cross-repository dependencies and the API
+  calls: verify at bootstrap.

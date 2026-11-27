@@ -83,3 +83,19 @@ is "verify at bootstrap".
 - A scoped token needs the Jira write scope for transitions.
 - Development-tool integrations and automation rules may move tickets on
   their own: ask, and do not duplicate.
+
+## Review threads
+
+- None: Jira has no diff. Reviews live on the code host; at most a link
+  or one-line verdict goes to the issue, if authorized.
+
+## Parent and child items
+
+- Hierarchy is expressed through the `parent` field; Atlassian has been
+  replacing the older Epic Link and Parent Link fields with it for both
+  company-managed and team-managed projects (announcements, not the
+  current reference). Item types, hierarchy levels, and required fields
+  vary by project: discover them from the project's create metadata.
+- Issue links (blocks, relates to) are a separate mechanism; link types
+  are instance-specific.
+- Exact fields and calls: verify at bootstrap in the REST v3 reference.

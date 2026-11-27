@@ -58,7 +58,10 @@ Adapt per project; create only what the workflows use.
 | reconcile | Finds existing branch and change request by task identity |
 | change-request | Creates it from a body file (early draft only in `comments` mode, otherwise after the gate), marks ready, records links |
 | review | Runs the verified reviewer command read-only, stores raw output |
-| review-publish | One script with a mode switch (`comments`, `summary`, `local`, no change request): extracts the verdict, writes the local report, sanitizes, refuses on secret-like content, publishes idempotently only what the mode allows |
+| review-publish | One script with a mode switch (`inline`, `comments`, `summary`, `local`, no change request): extracts verdict and structured findings, writes the local report, sanitizes, refuses on secret-like content, reconciles existing comments and threads by hidden marker, then creates, replies, resolves, or reopens only what the mode and the authorizations allow (`review-threads.md`) |
+| epic-plan | Validates a decomposition plan: children complete, stable keys, acyclic dependency graph, contract entries present, limits respected |
+| child-create | Reconciles by parent link and key, creates a child item from a body file, links it to the parent, records the identifier; no blind retry |
+| epic-status | Rolls up child state from task state and real tracker and host state; lists blocked children and held dependents |
 | branch-name | Builds and validates branch, commit, and title strings from the configured patterns; sanitized slug; detects reuse and collisions |
 | ticket-transition | Reads state, discovers available transitions, moves only along the allowlist, idempotent, no blind retry |
 | gate | Compares evidence and review with the current head; pass or fail only |

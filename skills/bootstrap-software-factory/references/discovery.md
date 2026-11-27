@@ -114,6 +114,9 @@ repo.read, branch.push, change.create, change.read, change.update,
 change.comment, change.approve;
 ci.read, review.read; logs.query, traces.query, db.query_readonly.
 
+`change.resolve` (resolve or reopen a review thread) and `issue.link`
+(parent, child, or dependency links) are separate write capabilities.
+
 Mark each capability:
 verified, configured_unverified, unavailable, or not_requested.
 Each write capability is authorized separately; one does not imply another.

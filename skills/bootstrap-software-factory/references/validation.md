@@ -88,6 +88,22 @@ The factory must run without this skill installed.
 - No transition ran with transitions disabled, and none outside the
   allowlist.
 
+## Inline review threads and epics (only if configured)
+
+- `review-publish` in `inline` mode, against a stub or disposable change
+  request: new finding creates one thread; rerun creates none (duplicate
+  suppression by marker); stale anchor after a new commit is matched and
+  answered in the same thread; verified fix resolves; regression reopens;
+  host without line anchors, or a rejected anchor, falls back to a flat
+  `file:line` comment; missing resolve authorization leaves threads open
+  and says so; a partial thread listing blocks posting.
+- `epic-plan`: valid plan, cycle, missing criteria, missing contract
+  entry, over the child limit. `child-create`: create, rerun reuses,
+  uncertain result reconciles, link failure reported. `epic-status`:
+  all done, one blocked holding its dependents, partial completion.
+- No child item was created before plan approval unless the waiver is
+  logged.
+
 ## Guards
 
 - Every guard has fixture tests: a violating diff, a compliant diff, and

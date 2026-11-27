@@ -76,3 +76,18 @@ is "verify at bootstrap".
 - Where the tracker is integrated with Bitbucket, tracker-side automation
   may already move tickets on branch or pull-request events: ask, and do
   not duplicate those moves. Verify at bootstrap.
+
+## Review threads
+
+- Supported in the interface: comments on a file or a line of the diff,
+  replies, and tasks; when a commented line changes, the comment stays in
+  the activity and the diff is marked outdated.
+  https://confluence.atlassian.com/bitbucketserver/review-and-discuss-a-pull-request-808488540.html
+- The REST calls (comment with a line anchor, reply, task, resolve state)
+  could not be read in this pass: take them from the REST reference for
+  the deployed version; verify at bootstrap. Until confirmed, use the
+  flat `file:line` fallback.
+
+## Parent and child items
+
+- None: no tracker. Use the paired tracker's provider file.
