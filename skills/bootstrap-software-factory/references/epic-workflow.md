@@ -71,6 +71,17 @@ order or contract) is a scope change and returns to the gate.
   its own evidence, review, and gate.
 - A child starts only when its dependencies have reached the configured
   point (default: change request open and gate passed; stricter: merged).
+- MERGE TOGETHER. With the default start point a child begins before its
+  dependencies are merged, so the children of one epic that share a
+  contract must be merged as ONE SET, in one window, in dependency order:
+  never one at a time while the others are still open. Say this explicitly
+  in every child's change-request description (the set's links and the
+  order) and in the epic report. The factory never merges; `epic-status`
+  reports "ready to merge as a set" only when every child in the set has a
+  passing gate on its current head and the revision tuple is consistent. A
+  new commit in one child invalidates that child's evidence and its
+  dependents'. With the stricter start point (merged) the merges are
+  sequential instead, and the report says so.
 - Concurrency: the existing limits across repositories and one writer
   per repository unless separate worktrees and resources are allocated.
 - Epic state is a persistent file with a single writer: approved plan and
