@@ -42,3 +42,24 @@ GitHub CLI works against it.
 - No official first-party CLI is assumed: use an available MCP tool or a
   small adapter over the verified API.
 - Check which CI system reports statuses and on which events.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official: none confirmed (no CLI or MCP server from the Forgejo project
+  itself). Verify at bootstrap.
+- Community: `fj` (forgejo-cli), under the `forgejo-contrib` organization,
+  actively developed, pre-1.0: https://codeberg.org/forgejo-contrib/forgejo-cli
+  Community MCP servers exist under several similar names and one has
+  moved hosts: check the exact source, maintainer, and release history
+  before proposing any, and prefer `fj` or the adapter.
+- Thin adapter (often the right choice here): a few REST v1 calls taken
+  from the instance's OpenAPI document: read repository, read and create
+  issue, comment, list, create, and update pull request, read statuses.

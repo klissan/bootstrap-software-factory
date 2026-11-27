@@ -52,3 +52,23 @@ Alternative: a fine-grained personal access token.
 - Branch protection and required checks need admin rights and are a
   separate, logged user decision, not part of the factory token.
 - Check workflow triggers: push-only CI never reports on PRs.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official: the `gh` CLI (github.com and Enterprise Server). Default choice;
+  scripts call it directly, which costs no context.
+- Official: GitHub MCP server, https://github.com/github/github-mcp-server.
+  Remote endpoint `https://api.githubcopilot.com/mcp/` (github.com only);
+  the local server supports Enterprise Server through `--gh-host` or
+  `GITHUB_HOST`. Has `--read-only` and `--toolsets`: use both. Propose it
+  only if `gh` does not cover a needed capability.
+- Community: not needed.
+- Thin adapter: only for an endpoint `gh` lacks; use `gh api`.

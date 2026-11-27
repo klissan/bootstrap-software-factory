@@ -43,3 +43,25 @@ protected branches, supported features. Do not assume the newest features.
   and whether the author can.
 - Pipelines for merge requests run only if the CI configuration defines
   them; check before promising CI results.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official: `glab`, GitLab's open-source CLI; works with GitLab.com,
+  Dedicated, and Self-Managed.
+  https://docs.gitlab.com/editor_extensions/gitlab_cli/
+- Official: GitLab MCP server at `https://<host>/api/v4/mcp`, offered for
+  Self-Managed too; experiment in 18.3, beta in 18.6, generally available
+  in 19.5. An administrator must allow access for the instance. OAuth with
+  the `mcp` scope or a fine-grained token; legacy personal, project, and
+  group tokens are rejected. Check the deployed version first.
+  https://docs.gitlab.com/user/gitlab_duo/model_context_protocol/mcp_server/
+- Community: not needed.
+- Thin adapter: REST v4 for anything the deployed version lacks.

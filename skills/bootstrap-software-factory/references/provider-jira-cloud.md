@@ -45,3 +45,27 @@ Do not use Data Center endpoints or assumptions.
 - Transitions and required fields differ per project and issue type: read
   them from the API, do not assume names.
 - Handle pagination and rate limiting explicitly.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official: Atlassian's hosted MCP server, `https://mcp.atlassian.com/v2/mcp`,
+  OAuth 2.1 (API token optional), covering Jira among other cloud
+  products. Some calls consume Rovo credits; an organization admin may
+  control access.
+  https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/
+- Official: Atlassian CLI (`acli`), documented under the Cloud developer
+  docs; which Jira commands it offers and how it authenticates were not
+  confirmed: verify at bootstrap.
+  https://developer.atlassian.com/cloud/acli/guides/introduction/
+- Community: not needed when the official server is permitted.
+- Thin adapter: REST v3 for read issue, search, comment, transition, and
+  create, when the organization does not allow the MCP server or the
+  factory needs scripted, model-free access.

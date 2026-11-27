@@ -5,7 +5,7 @@ description: Bootstrap, audit, or upgrade a project-specific software factory ac
 
 # Bootstrap Software Factory
 
-Skill revision: 4 (2026-11-27). Record it in generated provenance.
+Skill revision: 5 (2026-11-27). Record it in generated provenance.
 
 Build a project-specific factory that a coding-agent session can operate.
 Use the current session as coordinator unless the project needs an external
@@ -31,6 +31,7 @@ condition holds, and only the profiles for the chosen options.
 | `runtime-claude-code.md`, `runtime-codex.md`, `runtime-cursor.md` | That runtime is chosen |
 | `provider-github.md`, `provider-gitlab.md`, `provider-forgejo.md`, `provider-bitbucket-dc.md`, `provider-jira-cloud.md`, `provider-jira-dc.md` | That provider is chosen |
 | `onboarding.md` | After the interview, before setup instructions and the doctor |
+| `recommended-tooling.md` | With onboarding: proposing optional MCP servers, plugins, skills |
 | `scripts.md` | Designing steps (§5) and writing scripts (§9); shell pitfalls |
 | `delivery-workflow.md` | Generating the development workflow (§7) |
 | `incident-workflow.md` | Generating the incident workflow (§8) |
@@ -151,8 +152,9 @@ fields, and the conflict checks. Rules that always hold:
 Follow `discovery.md` for the connection record and capability list, and
 the `provider-*.md` file of each provider in use. Rules that always hold:
 
-- Use available service-specific tools first, then authenticated CLIs,
-  then a small API adapter.
+- Prefer an official ready-made tool (CLI or MCP server), then a
+  well-maintained community one with the user's consent, then a small API
+  adapter. The glue around it stays in the factory's scripts.
 - Inspect actual tool schemas and installed versions. Never invent MCP
   tool names, server packages, CLI flags, or credentials. Read official
   documentation for the deployed product and version.
@@ -196,6 +198,12 @@ where to store the reference, how to verify), generate
 `docs/setup/<item>.md` plus a status checklist, and generate and run the
 doctor script. Never ask for or echo a secret. Continue independent work
 while the user completes setup.
+
+In the same step propose the short list in `recommended-tooling.md`, item
+by item. Install nothing without explicit consent for that item; third-party
+servers and plugins run with the user's credentials, so say so. Log each
+acceptance and refusal. The factory must not depend on an optional tool
+the user did not accept, and keeps a fallback for those accepted.
 
 ## 5. Design the factory
 

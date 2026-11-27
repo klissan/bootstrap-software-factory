@@ -43,3 +43,28 @@ statuses, merge checks, default reviewers, network/TLS prerequisites.
 - CI is external (build statuses posted by another system): discover
   which system reports, and whether it runs on pull requests.
 - "Approved" is a reviewer action; record who may give it.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official CLI: none found. Verify at bootstrap.
+- Official MCP: Atlassian documents an "MCP for Bitbucket Data Center"
+  plugin with endpoint `https://<host>/rest/mcp/1.0/`, bearer-token
+  authentication, and read and write tools limited by the token's
+  permissions and an administrator whitelist. It must be installed on the
+  instance by an administrator; supported versions, licensing, and
+  release status are not stated on the page: verify at bootstrap.
+  https://confluence.atlassian.com/bitbucketserver/mcp-for-bitbucket-dc-1822723926.html
+  Atlassian's hosted MCP server covers Bitbucket Cloud, not Data Center.
+- Community: several unaffiliated MCP servers with similar package names;
+  propose one only with a trust note and after checking its source.
+- Thin adapter (the default unless the plugin is installed): REST calls
+  for read repository, list, create, and update pull request (with the
+  version number), comment, and read build statuses.

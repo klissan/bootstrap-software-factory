@@ -31,6 +31,13 @@ reviewer. Then read only the matching `provider-*.md` and `runtime-*.md`.
   where the product lets a personal token inherit all of the user's rights.
 - Git transport: SSH key or credential helper. Never a token in a remote URL.
 
+## Recommended tooling
+
+In the same step, propose the items from `recommended-tooling.md` that fit
+the chosen runtimes, one by one, with purpose, cost, and what leaves the
+machine. Accepted tools get a `docs/setup/<tool>.md`, a checklist line,
+and a doctor check; declined ones are only logged as declined.
+
 ## Generated output
 
 `docs/setup/<connection-or-runtime>.md`, one per chosen item:
@@ -60,7 +67,8 @@ overrides and checks, per item:
   in, store entry present) without reading the value into output;
 - a scoped live read succeeds (identity endpoint, one allowed repository
   or project) and, for self-hosted products, the server version;
-- reviewer CLI present, logged in, and the configured model in its catalog.
+- reviewer CLI present, logged in, and the configured model in its catalog;
+- each accepted optional tool is configured and answers one read call.
 
 Output: JSON list of `{id, status: pass|fail|skip, hint}` where the hint
 names the setup file to open. Print only pass, fail, or skip and

@@ -39,3 +39,26 @@ authentication, custom fields, workflows, network/VPN/TLS prerequisites
 - TLS failures against an internal authority are a setup item (trust
   store), never a reason to disable certificate verification.
 - Rich text is wiki markup, not Atlassian Document Format.
+
+## Ready-made tool or own adapter
+
+Selection rule: official ready-made tool > well-maintained community tool
+(only after the user's consent and a trust note: it runs with the user's
+credentials) > thin adapter written by the factory. Whatever is chosen,
+the glue around it (snapshots, reconciliation, idempotent posting,
+evidence) stays in the factory's own scripts: it is repeated and needs no
+model. Facts read 2026-11-27; anything not from the linked official page
+is "verify at bootstrap".
+
+- Official: none found. Atlassian's hosted MCP server and `acli` are
+  documented for Cloud; nothing in the pages read says they support Data
+  Center, and a public feature request for an official Jira Data Center
+  MCP server is open. Do not assume one exists; verify at bootstrap.
+- Community: `mcp-atlassian` (https://github.com/sooperset/mcp-atlassian)
+  states support for Server and Data Center 8.14+ with a personal access
+  token. Unaffiliated with Atlassian, and it receives a token that
+  inherits all of the user's rights: propose only with consent, a pinned
+  version, and a dedicated low-privilege account. Many similarly named
+  packages exist; confirm the exact source.
+- Thin adapter (the default): REST v2 for read issue, search, comment,
+  transition, and create, with the Bearer token.

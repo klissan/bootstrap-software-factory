@@ -74,6 +74,19 @@ The factory must run without this skill installed.
   the skill directory excluded, then confirm the first-run prompt works in
   a fresh session that does not invoke the skill.
 
+## Optional tools
+
+- Every installed optional tool (MCP server, plugin, skill, CLI) proposed
+  or found in this run is in the AI inventory and has a decision entry
+  (accepted or declined, decided-by user). Nothing was installed without
+  one.
+- No install command or committed configuration contains a secret;
+  versions are pinned where the mechanism allows.
+- Removing or disabling each optional tool does not break the factory:
+  no script, gate, or mandatory stage requires it, and the documented
+  fallback works. Test by running the affected step with the tool
+  disabled, or mark the fallback unverified.
+
 ## Workflows
 
 - Cross-repository contracts are checked together.
