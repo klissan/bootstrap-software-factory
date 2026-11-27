@@ -65,3 +65,14 @@ is "verify at bootstrap".
   https://docs.gitlab.com/user/gitlab_duo/model_context_protocol/mcp_server/
 - Community: not needed.
 - Thin adapter: REST v4 for anything the deployed version lacks.
+
+## Ticket transitions
+
+- Issues are open or closed. Closing patterns (close, fix, resolve,
+  implement and their forms) in a commit message or merge-request
+  description close the issue when merged into the default branch; a
+  project can turn this off. Cross-project form: `group/project#N`.
+  https://docs.gitlab.com/user/project/issues/managing_issues/
+- Finer states: Status (Premium and Ultimate), or labels and board lists.
+  Discover which the project uses. API calls for state, status, and
+  labels: verify at bootstrap against the deployed version.

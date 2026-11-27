@@ -74,6 +74,20 @@ The factory must run without this skill installed.
   the skill directory excluded, then confirm the first-run prompt works in
   a fresh session that does not invoke the skill.
 
+## Conventions
+
+- The configured branch pattern, transition allowlist, and review
+  publication mode are exercised by fixture tests: `branch-name` (valid,
+  too long, illegal characters, empty slug, reuse of an existing branch
+  or change request, collision); `ticket-transition` (already in state,
+  allowed move, move outside the allowlist refused, uncertain result);
+  `review-publish` in each mode and with no change request.
+- What happened matches the configured mode: no comments were posted in
+  `local` or `summary`, exactly one summary exists, a draft was opened
+  early only in `comments`, and the report names where the record lives.
+- No transition ran with transitions disabled, and none outside the
+  allowlist.
+
 ## Guards
 
 - Every guard has fixture tests: a violating diff, a compliant diff, and

@@ -68,3 +68,11 @@ is "verify at bootstrap".
 - Thin adapter (the default unless the plugin is installed): REST calls
   for read repository, list, create, and update pull request (with the
   version number), comment, and read build statuses.
+
+## Ticket transitions
+
+- Bitbucket Data Center has no tracker of its own; tickets live in the
+  paired tracker (usually Jira): use that provider file.
+- Where the tracker is integrated with Bitbucket, tracker-side automation
+  may already move tickets on branch or pull-request events: ask, and do
+  not duplicate those moves. Verify at bootstrap.

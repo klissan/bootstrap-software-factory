@@ -72,3 +72,17 @@ is "verify at bootstrap".
   only if `gh` does not cover a needed capability.
 - Community: not needed.
 - Thin adapter: only for an endpoint `gh` lacks; use `gh api`.
+
+## Ticket transitions
+
+- Issues have only open and closed. A closing keyword (close, fix,
+  resolve and their forms) with an issue reference in the pull-request
+  description closes the issue when the pull request is merged into the
+  default branch; keywords are ignored for other target branches.
+  Cross-repository form: `owner/repo#N`.
+  https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
+- Finer states are labels or a Projects status field, by the team's own
+  convention: discover which is used. Projects access and commands:
+  verify at bootstrap (fine-grained tokens cannot reach user-owned
+  Projects).
+- Closing on merge is the host's job; the factory only writes the keyword.

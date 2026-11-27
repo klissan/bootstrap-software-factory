@@ -5,7 +5,7 @@ description: Bootstrap, audit, or upgrade a project-specific software factory ac
 
 # Bootstrap Software Factory
 
-Skill revision: 6 (2026-11-27). Record it in generated provenance.
+Skill revision: 7 (2026-11-27). Record it in generated provenance.
 
 Build a project-specific factory that a coding-agent session can operate.
 Use the current session as coordinator unless the project needs an external
@@ -184,7 +184,8 @@ Resolve only decisions not already established; the question list is in
 `interview.md` (scope, authority of existing rules, permission to modify
 target repositories, pre-existing local work, task inputs, completion
 point, authorized external writes, primary and reviewer runtime and model,
-meaning of approval, enforcement level, decision-log placement,
+meaning of approval, review publication, ticket transitions, naming,
+enforcement level, decision-log placement,
 parallelism, incident data access, owners, limits).
 
 Offer a recommended default with a concrete tradeoff.
@@ -285,8 +286,12 @@ Rules the generated workflow must keep:
 - Mandatory stages run explicitly; "done" never skips verification or review.
 - Review is independent, read-only, in a fresh context, through the
   verified reviewer invocation. Unavailable or unparseable review means
-  blocked, never silent self-review. Every round is published on the
-  change request. Define what "approved" means on this host.
+  blocked, never silent self-review. Publication follows the user's
+  `review.publication` mode (comments, summary, local); a durable record
+  always exists. Define what "approved" means on this host.
+- Names come from the `branch-name` script and the configured patterns;
+  never push to a default or protected branch. Tickets move only if the
+  user enabled it, along an authorized allowlist.
 - Evidence is bound to the exact candidate revision; any change to code,
   contracts, tests, or configuration invalidates it; the gate compares with
   the current head immediately before publishing.

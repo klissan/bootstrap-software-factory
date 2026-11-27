@@ -73,14 +73,45 @@ If the required reviewer is unavailable, mark the stage blocked; do not
 silently substitute self-review.
 Define "approved" per host: who may approve and how it is recorded. Where
 the host forbids approving one's own change, use a recorded gate verdict
-plus a comment and do not call it a host approval.
-Never leave a review as a black box: open the change request as a draft after
-the first passing verification and publish every review round (verdict,
-findings, revision, reviewer model) as a comment on it. Sanitize local paths,
-refuse on secret-like content, and make posting idempotent (a hidden marker
-per revision and round). Mark it ready only after the gate passes on the
-final head. Review rounds are limited: check every factual claim in generated
+plus whatever record the publication mode allows, and do not call it a
+host approval.
+Review rounds are limited: check every factual claim in generated
 documentation against the code before the first round.
+
+## Review publication
+
+The user chooses how much of the review is published
+(`review.publication`, logged as a user decision). In every mode the
+reviewer call is local and headless, the stage is mandatory, evidence is
+bound to the commit, and the full transcript of every round stays in the
+factory's local state. A review is never a black box: there is always a
+durable record in a place the user chose, and the task report says where.
+
+- `comments`: open the change request as a draft after the first passing
+  verification; publish every round (verdict, findings, revision, reviewer
+  model) as one comment each; mark it ready only after the gate passes on
+  the final head.
+- `summary`: rounds run locally. Create the change request only after the
+  gate passes on the final head, with ONE concise summary in its
+  description (or a single final comment, the user's choice): verdict,
+  number of rounds, what was found and fixed, reviewed revision, reviewer
+  model.
+- `local`: rounds run locally. Create the change request already reviewed,
+  only after the gate passes on the final head, never as an early draft.
+  Publish nothing except, if the user wants it, a one-line verdict or a
+  link in the description. The durable record is the review report file.
+
+Whatever is published is sanitized (no local paths), refused on
+secret-like content, and idempotent (a hidden marker per revision and
+round, or per summary). A new commit after publication invalidates the
+review; the summary or verdict is then replaced, not duplicated.
+
+No change request (completion point is local changes, or the host has
+none): write the review report to the configured location in the factory
+state (`review.report_path`, one file per task and revision), reference
+it from task state and the final report to the user, and where authorized
+and wanted add a one-line reference in the tracker item. Modes
+`comments` and `summary` fall back to this file and say so.
 
 ## Evidence and integration
 
@@ -112,6 +143,45 @@ Before publishing, reconcile existing branches and PRs by task identity.
 Use a stable external-operation key and inspect uncertain prior outcomes.
 Store delivery links and partial successes.
 Link relevant decision entries from the change-request body.
+
+## Naming
+
+Branch, commit message, and change-request title follow the configured
+patterns (`naming.*`), inferred from the repository's existing convention
+or chosen in the interview.
+
+- The `branch-name` script builds and validates every name: placeholders
+  (ticket key or number, type, slug), per-repository override, maximum
+  length, allowed characters. The slug is derived mechanically: ASCII,
+  lowercase, dashes, length cap. Raw ticket text never reaches a shell
+  command or a ref name unvalidated.
+- An existing branch or change request for the same task is reused, not
+  duplicated; a name collision with a different task is a blocked state.
+- Never push to the default or a protected branch.
+- Cross-repository work uses each repository's own ticket number.
+- Where the user wants a hard rule, enforce the patterns with a guard
+  (`guards.md`); otherwise the script is the only producer of names.
+
+## Ticket transitions
+
+Off unless the user turned them on. When on, the configuration lists,
+per tracker project, the events (work started, change request opened,
+review passed, merged or closed, blocked), the target state for each, and
+who moves the ticket (the factory's account or the user).
+
+- Each transition is an external write under the separately authorized
+  and separately verified `issue.transition` capability, limited to the
+  configured allowlist.
+- The `ticket-transition` script reads the current state first, discovers
+  the transitions available for that issue (workflows differ per project;
+  never hard-code identifiers), moves only along an allowed one, is a
+  no-op when the ticket is already there, and after an uncertain result
+  re-reads the state instead of retrying. It never interpolates ticket
+  text into a command.
+- A transition the host performs by itself (a closing keyword on merge,
+  tracker-side automation) is not repeated by the factory: record which
+  side owns each event. See "Ticket transitions" in the provider file.
+- A failed or unavailable transition never blocks delivery; report it.
 
 ## After a failure
 

@@ -62,3 +62,15 @@ is "verify at bootstrap".
   packages exist; confirm the exact source.
 - Thin adapter (the default): REST v2 for read issue, search, comment,
   transition, and create, with the Bearer token.
+
+## Ticket transitions
+
+- Real workflow transitions, different per project and issue type:
+  list the transitions available for the issue in its current status,
+  then perform one by its identifier. The REST v2 issue resource provides
+  both; the exact paths and bodies were seen only in secondary sources:
+  verify in the REST reference for the deployed version.
+- Transitions may require fields or be hidden by conditions and
+  permissions of the account in use: discover per issue.
+- Integrated code hosts and workflow triggers may move tickets on their
+  own: ask, and do not duplicate.

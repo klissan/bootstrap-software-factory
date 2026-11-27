@@ -69,3 +69,17 @@ is "verify at bootstrap".
 - Thin adapter: REST v3 for read issue, search, comment, transition, and
   create, when the organization does not allow the MCP server or the
   factory needs scripted, model-free access.
+
+## Ticket transitions
+
+- Real workflow transitions, different per project and issue type. The
+  REST v3 Issues group has "Get transitions" (those available for the
+  issue in its current status to this user) and "Transition issue" (by
+  transition identifier). Paths and required fields were not re-read in
+  this pass: take them from the reference linked above.
+- A transition may require fields (for example a resolution) or be
+  hidden by permissions and conditions: discover per issue, never
+  hard-code identifiers or state names across projects.
+- A scoped token needs the Jira write scope for transitions.
+- Development-tool integrations and automation rules may move tickets on
+  their own: ask, and do not duplicate.

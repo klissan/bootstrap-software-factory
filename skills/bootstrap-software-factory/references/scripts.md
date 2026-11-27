@@ -56,9 +56,11 @@ Adapt per project; create only what the workflows use.
 | baseline | Extracts passed, failed, skipped counts from verification output |
 | state | Atomic stage transitions with event history; status summary for resume |
 | reconcile | Finds existing branch and change request by task identity |
-| change-request | Creates the draft from a body file, marks ready, records links |
+| change-request | Creates it from a body file (early draft only in `comments` mode, otherwise after the gate), marks ready, records links |
 | review | Runs the verified reviewer command read-only, stores raw output |
-| review-post | Extracts the verdict, sanitizes paths, refuses on secret-like content, posts idempotently |
+| review-publish | One script with a mode switch (`comments`, `summary`, `local`, no change request): extracts the verdict, writes the local report, sanitizes, refuses on secret-like content, publishes idempotently only what the mode allows |
+| branch-name | Builds and validates branch, commit, and title strings from the configured patterns; sanitized slug; detects reuse and collisions |
+| ticket-transition | Reads state, discovers available transitions, moves only along the allowlist, idempotent, no blind retry |
 | gate | Compares evidence and review with the current head; pass or fail only |
 | cleanup | Removes merged or cancelled worktrees and branches, never the main checkout |
 | report | Assembles the task or readiness report from state and evidence |

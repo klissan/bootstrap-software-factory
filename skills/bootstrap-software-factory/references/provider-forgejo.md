@@ -63,3 +63,14 @@ is "verify at bootstrap".
 - Thin adapter (often the right choice here): a few REST v1 calls taken
   from the instance's OpenAPI document: read repository, read and create
   issue, comment, list, create, and update pull request, read statuses.
+
+## Ticket transitions
+
+- Issues are open or closed. Closing and reopening keywords (close, fix,
+  resolve; reopen) in a pull-request description or commit message act
+  when the pull request is merged, if the person merging may close the
+  issue; administrators can change the keyword list.
+  https://forgejo.org/docs/latest/user/linked-references/
+- Finer states are labels by the team's convention. Whether closing
+  requires the default branch, and the API calls for state and labels:
+  verify at bootstrap from the instance's OpenAPI document.

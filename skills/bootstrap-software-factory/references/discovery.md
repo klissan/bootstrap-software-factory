@@ -165,3 +165,12 @@ invent an invariant the project does not have. Propose the few with the
 highest value and the lowest false-positive risk first; say what each
 check would miss. Record accepted and declined candidates in the
 decision log.
+
+## Naming conventions
+
+Infer branch, commit-message, and change-request title conventions from
+evidence: existing remote branches, merged change requests, contributing
+guides, CI branch filters, commit or push hooks, and protected-branch
+patterns. Propose the observed convention as the default; note
+exceptions. If there is none, propose a simple deterministic one. Never
+invent a convention the history contradicts.

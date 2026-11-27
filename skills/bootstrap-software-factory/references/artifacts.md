@@ -47,7 +47,12 @@ Include configuration for:
 schema version, generating skill revision, factory identity, runtimes
 (primary and `reviewer.runtime`, `model`, `effort`, verified command),
 repositories, connections, commands, workflows, permissions, limits,
-context budget, decision-log locations, evidence storage, and readiness.
+context budget, decision-log locations, evidence storage, and readiness;
+`review.publication` (`comments`, `summary`, `local`), where the summary
+goes, and `review.report_path`; `transitions` (enabled, and per tracker
+project: event, target state, actor, allowlist); `naming` (branch pattern,
+placeholders, maximum length, allowed characters, per-repository
+overrides, commit-message and change-request title patterns).
 Choose a format the generated scripts' runtime parses natively.
 
 Use structured command arguments and explicit working directories where
